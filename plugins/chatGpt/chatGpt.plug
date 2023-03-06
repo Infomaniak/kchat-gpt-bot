@@ -1,0 +1,10 @@
+[Core]
+name = chatGpt
+module = chatGpt
+
+[Documentation]
+description = Chat GPT
+
+[Python]
+version = 3
+
