@@ -34,7 +34,7 @@ class ChatGpt(BotPlugin):
         if self.bot_identifier not in mentioned_people:
             return
 
-        log.info("message from " + message.frm.person)
+        log.info(f"message from {message.frm.person}")
 
         if hasattr(message.frm, "channelid"):
             conversation_id = message.frm.channelid
@@ -42,9 +42,9 @@ class ChatGpt(BotPlugin):
         else:
             conversation_id = message.frm.person
 
-        prompt = message.body.replace("@" + self.bot_identifier.username, "").strip()
+        prompt = message.body.replace(f"@{self.bot_identifier.username}", "").strip()
 
-        if prompt.lower() == "reset!" or prompt.lower() == "reset":
+        if prompt.lower() in ["reset!", "reset"]:
             with self.mutable('CONVERSATIONS') as d:
                 if conversation_id in self['CONVERSATIONS']:
                     del d[conversation_id]
@@ -52,12 +52,7 @@ class ChatGpt(BotPlugin):
 
             return
 
-        if conversation_id in self['CONVERSATIONS']:
-            messages = self['CONVERSATIONS'][conversation_id]
-        else:
-            messages = [
-                {"role": "system", "content": "You are a helpful assistant."},
-            ]
+        messages = self['CONVERSATIONS'][conversation_id] if conversation_id in self['CONVERSATIONS'] else [{"role": "system", "content": "You are a helpful assistant."},]
 
         messages.append({"role": "user", "content": prompt})
 
