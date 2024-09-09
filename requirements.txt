@@ -1,4 +1,4 @@
 errbot==6.1.9
-kchatdriver==0.1.0
+kchatdriver==0.1.1
 openai==0.27.0
 tiktoken==0.3.0
